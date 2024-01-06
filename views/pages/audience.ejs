@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include ("../partials/header.ejs") %>
+</head>
+
+<body>
+
+<h1>Recruit Participants</h1>
+
+<div>How many participants do you want to recruit?</div>
+
+<input type="number" id="participants" name="participants">
+
+<h1>Location</h1>
+
+<div>Where do you want your participants from?</div>
+
+<form action="/action_page.php">
+    <input type="checkbox" id="usa" name="usa" value="usa">
+    <label for="usa"> USA</label><br>
+    <input type="checkbox" id="canada" name="canada" value="canada">
+    <label for="canada"> Canada</label><br>
+    <input type="checkbox" id="other" name="other" value="other">
+    <label for="other"> Other</label><br>
+</form>
+
+<h1>Study Distribution</h1>
+
+<div>How do you want to distribute your sample?</div>
+
+<button class="btn success" name = "representative" onclick="clicked(this.name)">Representative Sample</button>
+<button class="btn info" name = "balanced" onclick="clicked(this.name)">Balanced Sample</button>
+<button class="btn warning" name = "standard" onclick="clicked(this.name)">Standard Sample</button>
+      
+<p id="button-clicked"></p>
+
+<script>
+function clicked(buttonName) {
+  document.getElementById("button-clicked").innerHTML = buttonName;
+}
+</script>
+
+<h1>Haven't implemented screeners yet, want to get design input before I attempt anything</h1>
+
+<br>
+<input type="submit" value="Submit">
+
+
+</body>
+</html>

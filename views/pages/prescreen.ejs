@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .question {
+            display: none;
+        }
+
+        .current-question {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form action="javascript:void(0);" method="post" id="surveyForm" enctype="multipart/form-data">
+        <div class="question current-question" id="question1">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+
+        <div class="question" id="question2">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+
+        <div class="question" id="question3">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age">
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+
+        <div class="question" id="question4">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+
+        <div class="question" id="question5">
+            <label for="feedback">Feedback:</label>
+            <textarea id="feedback" name="feedback" rows="4"></textarea>
+            <button type="submit" onclick="submitForm()">Submit</button>
+        </div>
+    </form>
+
+    <script>
+        let currentQuestion = 1;
+
+        function nextQuestion() {
+            document.getElementById(`question${currentQuestion}`).classList.remove('current-question');
+            currentQuestion++;
+
+            if (currentQuestion <= 5) {
+                document.getElementById(`question${currentQuestion}`).classList.add('current-question');
+            }
+        }
+
+        function submitForm() {
+            // Retrieve form data
+            const formData = new FormData(document.getElementById('surveyForm'));
+
+            //logging formData
+            for ([key, value] of formData.entries()) { 
+                console.log(key, value);
+            }
+
+            // Make a POST request to the server-side script
+            fetch('/submit_survey', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Handle the response from the server (data is whatever the server echoes or returns)
+                console.log(data);                
+                alert('Survey submitted!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Survey submission failed. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>
