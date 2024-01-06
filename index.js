@@ -16,12 +16,3 @@ express()
 	res.send(req.body);
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
-function showTimes() {
-  const times = process.env.TIMES || 5
-  let result = ''
-  for (i = 0; i < times; i++) {
-    result += i + ' '
-  }
-  return result
-}
